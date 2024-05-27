@@ -17,3 +17,13 @@ def get_users():
         return response.json()
     
     raise requests.HTTPError
+
+
+class Phonetic :
+    def __init__(self , value : int) -> None:
+        
+        self.value = value
+        self.phonetic = get_phonetic_from_db(self.value)
+        
+    def get_phonetic(self) :
+        return phonetic_letters[self.value]

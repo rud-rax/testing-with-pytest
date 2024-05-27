@@ -5,10 +5,13 @@ sys.path.append(".")
 import pytest
 import unittest.mock as mock
 
+
+
+
 import requests
 
 from src.mocking import service as service
-
+from src.mocking.service import Phonetic
 
 @mock.patch("src.mocking.service.get_phonetic_from_db")
 def test_get_phonetic_from_db(mock_get_phonetic_from_db):
@@ -44,6 +47,7 @@ def test_get_users_error(mock_get):
     
     with pytest.raises(requests.HTTPError) :
         service.get_users()
+        
         
         
 def test_spy_method(mocker):
@@ -84,3 +88,28 @@ def test_spy_function(mocker):
     
 #     with pytest.raises(requests.HTTPError) :
 #         service.get_users()
+
+
+
+
+
+@mock.patch.object(Phonetic , 'get_phonetic')
+def test_get_phonetic(mock_response) :
+    
+    mock_response.return_value = 'Beta'
+    
+    ph = Phonetic(1111111)
+    
+    assert ph.get_phonetic() == 'Beta'
+    
+    
+
+
+@mock.patch('src.mocking.service.get_phonetic_from_db')
+def test_get_phonetic(mock_response) :
+    
+    mock_response.return_value = 'Beta'
+    
+    ph = Phonetic(1111111)
+    
+    assert ph.phonetic == 'Beta'
